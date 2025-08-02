@@ -140,3 +140,98 @@ streamlit run app.py
 - FAISS index construction
 - k-NN classification
 - Error analysis and optimization
+
+## 🔬 Technical Details
+
+### Text Preprocessing Pipeline
+```python
+def preprocess_text(text):
+    text = lowercase(text)
+    text = punctuation_removal(text)
+    tokens = tokenize(text)
+    tokens = remove_stopwords(tokens)
+    tokens = stemming(tokens)
+    return " ".join(tokens)
+```
+
+### Deep Learning Architecture
+1. **Input**: Raw SMS text
+2. **Tokenization**: AutoTokenizer (multilingual-e5-base)
+3. **Embedding**: Transformer model → 768-dim vectors
+4. **Indexing**: FAISS for efficient similarity search
+5. **Classification**: k-NN voting on nearest neighbors
+
+### Naive Bayes Variants
+- **Gaussian NB**: Assumes continuous features (BoW/TF-IDF)
+- **Multinomial NB**: For discrete count features
+- **Features**: Bag-of-Words or TF-IDF vectors
+
+## 📊 Error Analysis
+
+The project includes comprehensive error analysis showing:
+- Misclassified examples with confidence scores
+- Nearest neighbors for DL model errors
+- Performance trends across different k values
+- Common failure patterns and edge cases
+
+## 🔧 Key Dependencies
+
+- **streamlit**: Web application framework
+- **transformers**: Hugging Face transformer models
+- **torch**: PyTorch for deep learning
+- **faiss-cpu**: Efficient similarity search
+- **scikit-learn**: Traditional ML algorithms
+- **nltk**: Natural language processing
+- **pandas**: Data manipulation
+- **numpy**: Numerical computing
+- **gdown**: Google Drive file downloads
+
+## 🎯 Model Selection Guide
+
+**Choose Deep Learning (E5 + k-NN) when:**
+- Maximum accuracy is required (99.28%)
+- You have computational resources for transformer inference
+- You want semantic understanding of messages
+
+**Choose Naive Bayes when:**
+- You need fast inference and low memory usage
+- Interpretability is important
+- You have limited computational resources
+
+## 🌐 Deployment
+
+This app is designed for easy deployment on Streamlit Cloud with automatic model downloading:
+
+### Quick Deploy to Streamlit Cloud
+
+1. **Prepare models**: Upload your `models.zip` to Google Drive
+2. **Configure**: Update `MODELS_DRIVE_URL` in `config.py` with your Google Drive link
+3. **Deploy**: Connect your GitHub repo to [Streamlit Cloud](https://streamlit.io/cloud)
+4. **Auto-download**: Models download automatically on first launch
+
+**📋 Detailed Instructions**: See [`deployment_guide.md`](deployment_guide.md) for step-by-step deployment instructions.
+
+### Key Deployment Features
+
+- 🔄 **Automatic model downloading** from Google Drive
+- 📦 **Intelligent caching** - downloads only once per deployment
+- ✅ **Integrity checks** ensure all model files are present
+- 🔍 **Error handling** with clear user feedback
+- 📱 **Cloud-ready** designed for Streamlit Cloud constraints
+
+## 🚀 Future Improvements
+
+- [ ] Add more transformer models (BERT, RoBERTa)
+- [ ] Implement ensemble methods
+- [ ] Add real-time model retraining
+- [ ] Support for multiple languages
+- [ ] API endpoint development
+- [ ] Model deployment with Docker
+
+## 📝 License
+
+This project is open source and available under the MIT License.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.

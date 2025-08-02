@@ -8,6 +8,10 @@ import string
 import nltk
 import os
 
+# Import our model downloader
+from download_models import setup_models
+from config import MODELS_DRIVE_URL
+
 # --- NLTK Data Download and Preprocessing Functions (from NB notebook) ---
 # These are the same preprocessing steps as in the NB notebook.
 try:
@@ -236,6 +240,11 @@ st.markdown(
     ***Note: This application loads models from the models directory.***
     """
 )
+
+# Setup models (download if needed)
+if not setup_models(MODELS_DRIVE_URL):
+    st.error("❌ Failed to set up models. Please check your internet connection and try again.")
+    st.stop()
 
 # Load DL models once at the start
 dl_tokenizer, dl_model, dl_device, faiss_index, dl_train_messages, dl_train_labels, dl_le = load_deep_learning_models()
